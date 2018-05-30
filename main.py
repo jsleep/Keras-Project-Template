@@ -1,6 +1,3 @@
-from data_loader.simple_mnist_data_loader import SimpleMnistDataLoader
-from models.simple_mnist_model import SimpleMnistModel
-from trainers.simple_mnist_trainer import SimpleMnistModelTrainer
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.utils import get_args
@@ -11,9 +8,14 @@ def main():
     try:
         args = get_args()
         config = process_config(args.config)
+        if hasattr(self.config,"comet_api_key"):
+            from comet_ml import Experiment
     except:
         print("missing or invalid arguments")
         exit(0)
+
+    from data_loader.simple_mnist_data_loader import SimpleMnistDataLoader
+    from trainers.simple_mnist_trainer import SimpleMnistModelTrainer
 
     # create the experiments dirs
     create_dirs([config.callbacks.tensorboard_log_dir, config.callbacks.checkpoint_dir])
